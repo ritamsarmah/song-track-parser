@@ -61,7 +61,7 @@ class TrackParser {
                         let nsRange = match.range(at: n)
                         if let range = Range(nsRange, in: line) {
                             // Get order of tag index using regex capture group index - 1
-                            matchDict[order[n-1]] = String(line[range])
+                            matchDict[order[n-1]] = String(line[range]).trimmingCharacters(in: .whitespaces)
                         }
                     }
                     results.append(matchDict)
@@ -85,16 +85,26 @@ class TrackParser {
         let title = "title"
         let num = "num"
         let time = "time"
+        let artist = "artist"
         
-        order[title] = pattern.range(of: "TITLE")!.lowerBound
-        order[num] = pattern.range(of: "NUM")!.lowerBound
-        order[time] = pattern.range(of: "TIME")!.lowerBound
+        if let titleRange = pattern.range(of: "TITLE") {
+            order[title] = titleRange.lowerBound
+        }
+        if let numRange = pattern.range(of: "NUM") {
+            order[num] = numRange.lowerBound
+        }
+        if let timeRange = pattern.range(of: "TIME") {
+            order[time] = timeRange.lowerBound
+        }
+        if let artistRange = pattern.range(of: "ARTIST") {
+            order[artist] = artistRange.lowerBound
+        }
         
         return Array(order.keys).sorted {order[$0]! < order[$1]!}
     }
     
     func validatePattern(_ pattern: String) -> Bool {
-        let tags = ["NUM", "TITLE", "TIME"]
+        let tags = ["TITLE", "TIME"] // May also contain "NUM" or "ARTIST"
         for tag in tags {
             if !pattern.contains(tag) {
                 return false
@@ -113,6 +123,7 @@ class TrackParser {
         }
         
         regexString = regexString.replacingOccurrences(of: "TITLE", with: "(.+)")
+        regexString = regexString.replacingOccurrences(of: "ARTIST", with: "(.+)")
         regexString = regexString.replacingOccurrences(of: "NUM", with: "([0-9]+)")
         regexString = regexString.replacingOccurrences(of: "TIME", with: "((?:[0-9]+:)?[0-5]?[0-9]:[0-5][0-9])")
         

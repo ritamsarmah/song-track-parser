@@ -18,13 +18,14 @@ class ViewController: NSViewController {
     @IBOutlet weak var titleButton: NSButton!
     @IBOutlet weak var timeButton: NSButton!
     @IBOutlet weak var numButton: NSButton!
+    @IBOutlet weak var artistButton: NSButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         infoTextView.isRichText = false
         resultTextView.isRichText = false
         resultTextView.isEditable = false
-        formatTextField.placeholderString = "Example: \"NUM) TITLE - [TIME]\" for \"1) Song Name - [00:00]\""
+        formatTextField.placeholderString = "Example: \"NUM. ARTIST - TITLE (TIME)\" for \"1. Artist - Song Title (3:12)\""
     }
     
     override func viewWillAppear() {
@@ -59,14 +60,17 @@ class ViewController: NSViewController {
             var outputLines = [String]()
             for result in results {
                 var outputLine = [String]()
-                if numButton.state == .on {
-                    outputLine.append(result["num"]!)
+                if let num = result["num"], numButton.state == .on {
+                    outputLine.append(num)
                 }
-                if titleButton.state == .on {
-                    outputLine.append(result["title"]!)
+                if let title = result["title"], titleButton.state == .on {
+                    outputLine.append(title)
                 }
-                if timeButton.state == .on {
-                    outputLine.append(result["time"]!)
+                if let artist = result["artist"], artistButton.state == .on {
+                    outputLine.append(artist)
+                }
+                if let time = result["time"], timeButton.state == .on {
+                    outputLine.append(time)
                 }
                 outputLines.append(outputLine.joined(separator: ","))
             }

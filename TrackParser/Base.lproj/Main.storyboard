@@ -566,26 +566,33 @@
                                     <action selector="parseButtonPressed:" target="mRt-Ab-HbB" id="4nb-kg-0z4"/>
                                 </connections>
                             </button>
-                            <stackView distribution="fillEqually" orientation="horizontal" alignment="top" spacing="3" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O4c-Xc-GaH">
-                                <rect key="frame" x="20" y="61" width="237" height="14"/>
+                            <stackView distribution="equalSpacing" orientation="horizontal" alignment="top" spacing="20" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O4c-Xc-GaH">
+                                <rect key="frame" x="20" y="61" width="282" height="14"/>
                                 <subviews>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JLK-G2-UfM">
-                                        <rect key="frame" x="-2" y="-2" width="81" height="18"/>
+                                        <rect key="frame" x="-2" y="-2" width="49" height="18"/>
                                         <buttonCell key="cell" type="check" title="Title" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="QQ0-as-Dje">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                     </button>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OO4-5w-6eV">
-                                        <rect key="frame" x="78" y="-2" width="81" height="18"/>
+                                        <rect key="frame" x="63" y="-2" width="52" height="18"/>
                                         <buttonCell key="cell" type="check" title="Time" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="cvX-Xt-uWs">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                     </button>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rUb-hO-3Zh">
-                                        <rect key="frame" x="158" y="-2" width="81" height="18"/>
+                                        <rect key="frame" x="131" y="-2" width="81" height="18"/>
                                         <buttonCell key="cell" type="check" title="Track No." bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="EpR-Td-OtS">
+                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                    </button>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="o2Q-r4-uzb">
+                                        <rect key="frame" x="228" y="-2" width="56" height="18"/>
+                                        <buttonCell key="cell" type="check" title="Artist" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="sgP-en-Bcs">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -595,8 +602,10 @@
                                     <integer value="1000"/>
                                     <integer value="1000"/>
                                     <integer value="1000"/>
+                                    <integer value="1000"/>
                                 </visibilityPriorities>
                                 <customSpacing>
+                                    <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
@@ -625,6 +634,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="artistButton" destination="o2Q-r4-uzb" id="juF-1E-y2b"/>
                         <outlet property="formatTextField" destination="XuI-Yx-0Nn" id="3Bl-uA-9Io"/>
                         <outlet property="infoTextView" destination="dQq-cl-7IH" id="yj2-zr-NfR"/>
                         <outlet property="numButton" destination="rUb-hO-3Zh" id="v7j-en-OGq"/>
