@@ -59,9 +59,9 @@
                             </menuItem>
                             <menuItem title="File" id="dMs-cI-mzQ">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="File" id="bib-Uj-vzu">
+                                <menu key="submenu" title="File" autoenablesItems="NO" id="bib-Uj-vzu">
                                     <items>
-                                        <menuItem title="Export..." id="IAo-SY-fd9">
+                                        <menuItem title="Export..." enabled="NO" id="IAo-SY-fd9">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="exportSelected:" target="Voe-Tx-rLC" id="GiE-eQ-Xaf"/>
@@ -353,7 +353,7 @@
                 </application>
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="TrackParser" customModuleProvider="target">
                     <connections>
-                        <outlet property="exportItem" destination="IAo-SY-fd9" id="ciJ-nL-Zuj"/>
+                        <outlet property="exportItem" destination="IAo-SY-fd9" id="IUk-jK-F7e"/>
                     </connections>
                 </customObject>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
@@ -486,7 +486,7 @@
                                                             <rect key="frame" x="0.0" y="-1" width="264" height="283"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                            <size key="minSize" width="264" height="283"/>
+                                                            <size key="minSize" width="280" height="283"/>
                                                             <size key="maxSize" width="463" height="10000000"/>
                                                             <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                         </textView>

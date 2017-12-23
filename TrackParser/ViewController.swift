@@ -23,11 +23,12 @@ class ViewController: NSViewController {
     // Used for exporting to CSV
     var parseSuccess = false {
         didSet {
-            if parseSuccess == false {
-                availableHeadings.removeAll()
-                // TODO disable export
+            let delegate = NSApplication.shared.delegate as! AppDelegate
+            if parseSuccess {
+                delegate.exportItem.isEnabled = true
             } else {
-                // TODO enable export
+                availableHeadings.removeAll()
+                delegate.exportItem.isEnabled = false
             }
         }
     }
@@ -35,6 +36,7 @@ class ViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        parseSuccess = false
         infoTextView.isRichText = false
         resultTextView.isRichText = false
         resultTextView.isEditable = false
@@ -61,10 +63,10 @@ class ViewController: NSViewController {
          availableHeadings.removeAll()
         
         if trackInfo.isEmpty {
-            updateResult("Please enter track info.", success: true)
+            updateResult("Please enter track info.", success: false)
             return
         } else if lineFormat.isEmpty {
-            updateResult("Please enter the line format.", success: true)
+            updateResult("Please enter the line format.", success: false)
             return
         }
         

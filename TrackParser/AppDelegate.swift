@@ -23,18 +23,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBAction func exportSelected(_ sender: NSMenuItem) {
         let panel = NSSavePanel()
-        panel.nameFieldStringValue = "info.csv"
-        if let window = NSApplication.shared.windows.first {
+        panel.nameFieldStringValue = "Untitled.csv"
+        if let window = NSApplication.shared.mainWindow {
             panel.beginSheetModal(for: window, completionHandler: { (response) in
                 switch response {
                 case .OK:
-                    guard let file = panel.url else {
-                        return
-                    }
+                    guard let file = panel.url else { return }
                     let vc = window.contentViewController as! ViewController
-                    
-                    // Create heading row
                     let text = vc.availableHeadings.joined(separator: ",") + "\n" + vc.resultTextView.string
+                    
                     
                     // Write file
                     do {
@@ -42,10 +39,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     } catch {
                         print(error)
                     }
-                case .cancel:
-                    print("not done")
                 default:
-                    print("something else")
+                    print("Did not save file")
                 }
             })
         }
