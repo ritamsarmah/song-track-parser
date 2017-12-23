@@ -9,7 +9,7 @@
 import Cocoa
 
 class ViewController: NSViewController {
-
+    
     @IBOutlet weak var infoTextView: NSTextView!
     @IBOutlet weak var resultTextView: NSTextView!
     @IBOutlet weak var formatTextField: NSTextField!
@@ -20,16 +20,36 @@ class ViewController: NSViewController {
     @IBOutlet weak var numButton: NSButton!
     @IBOutlet weak var artistButton: NSButton!
     
+    // Used for exporting to CSV
+    var parseSuccess = false {
+        didSet {
+            if parseSuccess == false {
+                availableHeadings.removeAll()
+                // TODO disable export
+            } else {
+                // TODO enable export
+            }
+        }
+    }
+    var availableHeadings = [String]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         infoTextView.isRichText = false
         resultTextView.isRichText = false
         resultTextView.isEditable = false
-        formatTextField.placeholderString = "Example: \"NUM. ARTIST - TITLE (TIME)\" for \"1. Artist - Song Title (3:12)\""
+        
+        let fontName = "Menlo"
+        let fontSize: CGFloat = 12
+        infoTextView.font = NSFont(name: fontName, size: fontSize)
+        resultTextView.font = NSFont(name: fontName, size: fontSize)
+        formatTextField.font = NSFont(name: fontName, size: fontSize)
+        
+        formatTextField.placeholderString = "e.g. \"NUM. ARTIST - TITLE (TIME)\""
     }
     
     override func viewWillAppear() {
-        self.view.window?.title = "TSParser"
+        self.view.window?.title = "TrackParser"
         self.view.window?.contentMinSize = NSSize(width: 500, height: 400)
         self.view.translatesAutoresizingMaskIntoConstraints = true
     }
@@ -38,46 +58,81 @@ class ViewController: NSViewController {
         let parser = TrackParser()
         let trackInfo = infoTextView.string
         let lineFormat = formatTextField.stringValue
+         availableHeadings.removeAll()
         
         if trackInfo.isEmpty {
-            resultTextView.string = "Please enter track info."
+            updateResult("Please enter track info.", success: true)
             return
         } else if lineFormat.isEmpty {
-            resultTextView.string = "Please enter line format."
+            updateResult("Please enter the line format.", success: true)
             return
         }
         
         if !parser.validatePattern(lineFormat) {
-            resultTextView.string = "Invalid line format."
+            updateResult(
+                """
+                Invalid line format.
+
+                Required Tags
+                * Title: TITLE
+                * Time: TIME
+
+                Optional Tags
+                * Track Number: NUM
+                * Artist: ARTIST
+                """,
+                success: false)
             return
         }
         
         if let results = parser.parseAll(input: trackInfo, pattern: lineFormat) {
             if results.isEmpty {
-                resultTextView.string = "Failed to parse track info. Check line format."
+                updateResult("Failed to parse track info. Check line format.", success: false)
                 return
             }
+            
             var outputLines = [String]()
             for result in results {
                 var outputLine = [String]()
                 if let num = result["num"], numButton.state == .on {
                     outputLine.append(num)
+                    if !availableHeadings.contains("#") {
+                        availableHeadings.append("#")
+                    }
                 }
                 if let title = result["title"], titleButton.state == .on {
-                    outputLine.append(title)
+                    outputLine.append("\"" + title + "\"")
+                    if !availableHeadings.contains("Title") {
+                        availableHeadings.append("Title")
+                    }
                 }
                 if let artist = result["artist"], artistButton.state == .on {
-                    outputLine.append(artist)
+                    outputLine.append("\"" + artist + "\"")
+                    if !availableHeadings.contains("Artist") {
+                        availableHeadings.append("Artist")
+                    }
                 }
                 if let time = result["time"], timeButton.state == .on {
                     outputLine.append(time)
+                    if !availableHeadings.contains("Time") {
+                        availableHeadings.append("Time")
+                    }
                 }
                 outputLines.append(outputLine.joined(separator: ","))
             }
-            resultTextView.string = outputLines.joined(separator: "\n")
+            
+            // Update available headings for export
+            
+            updateResult(outputLines.joined(separator: "\n"), success: true)
         } else {
-            resultTextView.string = "Failed to parse track info. Check line format."
+            updateResult("Failed to parse track info. Check line format.", success: false)
         }
+    }
+    
+    func updateResult(_ error: String, success: Bool) {
+        resultTextView.string = error
+        parseSuccess = success
+        return
     }
 }
 
