@@ -123,7 +123,7 @@ class TrackParser {
         }
         
         regexString = regexString.replacingOccurrences(of: "TITLE", with: "(.+)")
-        regexString = regexString.replacingOccurrences(of: "ARTIST", with: "(.+)")
+        regexString = regexString.replacingOccurrences(of: "ARTIST", with: "(.*)")
         regexString = regexString.replacingOccurrences(of: "NUM", with: "([0-9]+)")
         regexString = regexString.replacingOccurrences(of: "TIME", with: "((?:[0-9]+:)?[0-5]?[0-9]:[0-5][0-9])")
         

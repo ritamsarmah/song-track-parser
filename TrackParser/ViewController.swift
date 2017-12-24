@@ -92,7 +92,7 @@ class ViewController: NSViewController {
                 updateResult("Failed to parse track info. Check line format.", success: false)
                 return
             }
-            
+            print(results)
             var outputLines = [String]()
             for result in results {
                 var outputLine = [String]()
