@@ -76,12 +76,12 @@ class ViewController: NSViewController {
                 Invalid line format.
 
                 Required Tags
-                * Title: TITLE
-                * Time: TIME
+                - Title: TITLE
+                - Time: TIME
 
                 Optional Tags
-                * Track Number: NUM
-                * Artist: ARTIST
+                - Track Number: NUM
+                - Artist: ARTIST
                 """,
                 success: false)
             return
